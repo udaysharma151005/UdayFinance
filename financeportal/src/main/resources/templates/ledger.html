@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lend & Borrow Tracker</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- 🔗 Navbar (Matching Dashboard/Budget) -->
+<header class="nav-glow">
+    <div class="nav-logo">
+        <span>Uday<span class="highlight">Finance</span></span>
+    </div>
+    <nav class="nav-menu">
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/ledger}" class="active-link">Lend/Borrow</a>
+        <a th:href="@{/budget}">Budget</a>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </nav>
+</header>
+
+<div class="container">
+    <h2>Hello, <span th:text="${username}">User</span> 👋</h2>
+
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+        <div class="card income">
+            <h3>Total Lent</h3>
+            <div class="amount">₹<span th:text="${totalLent}">0</span></div>
+        </div>
+        <div class="card expense">
+            <h3>Total Borrowed</h3>
+            <div class="amount">₹<span th:text="${totalBorrowed}">0</span></div>
+        </div>
+        <div class="card balance">
+            <h3 th:text="${netBalance >= 0 ? 'To Receive' : 'To Repay'}"></h3>
+            <div class="amount">
+                ₹<span th:text="${#numbers.formatDecimal(netBalance >= 0 ? netBalance : -netBalance, 0, 'COMMA', 2, 'POINT')}">0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Record Form -->
+    <form th:action="@{/add-record}" method="post" th:object="${newRecord}" class="transaction-form">
+        <input type="text" th:field="*{personName}" placeholder="Person Name" required>
+        <select th:field="*{type}" required>
+            <option value="">Type</option>
+            <option value="LENT">LENT</option>
+            <option value="BORROW">BORROW</option>
+        </select>
+        <input type="number" th:field="*{amount}" placeholder="Amount" step="0.01" required>
+        <input type="date" th:field="*{date}">
+        <input type="text" th:field="*{note}" placeholder="Note">
+        <button type="submit">➕ Add</button>
+    </form>
+
+    <!-- Records Table -->
+    <table>
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Person</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Note</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="r : ${records}">
+            <form th:action="@{'/update-record/' + ${r.id}}" method="post">
+                <td><input type="date" name="date" th:value="${r.date}" required></td>
+                <td><input type="text" name="personName" th:value="${r.personName}" required></td>
+                <td>
+                    <select name="type">
+                        <option value="LENT" th:selected="${r.type == 'LENT'}">LENT</option>
+                        <option value="BORROW" th:selected="${r.type == 'BORROW'}">BORROW</option>
+                    </select>
+                </td>
+                <td><input type="number" name="amount" th:value="${r.amount}" step="0.01" required></td>
+                <td><input type="text" name="note" th:value="${r.note}"></td>
+                <td>
+                    <button type="submit">💾</button>
+                    <a th:href="@{'/delete-record/' + ${r.id}}" onclick="return confirm('Sure?')" style="color:red;">🗑️</a>
+                </td>
+            </form>
+        </tr>
+        <tr th:if="${#lists.isEmpty(records)}">
+            <td colspan="6" style="text-align:center;">No records yet</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- 🔻 Footer -->
+<div th:replace="fragments/footer :: body"></div>
+
+</body>
+</html>

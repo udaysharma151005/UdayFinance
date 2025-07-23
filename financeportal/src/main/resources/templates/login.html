@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        .login-green .logout-message {
+            color: lightgreen;
+        }
+        .login-green p.register-link {
+            margin-top: 10px;
+            text-align: center;
+        }
+        .login-green a {
+            color: #00ffaa;
+        }
+    </style>
+</head>
+<body>
+<div class="auth-container login-green">
+    <div class="auth-card">
+        <h2>Login</h2>
+        <div th:if="${param.logout}">
+            <p class="logout-message">You’ve been logged out successfully.</p>
+        </div>
+        <div th:if="${message}">
+            <p th:text="${message}"></p>
+        </div>
+        <form method="post" th:action="@{/login}">
+            <input name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p class="register-link">
+            <a href="/register">Not registered? <strong>Sign up</strong></a>
+        </p>
+    </div>
+</div>
+</body>
+<script>
+    window.addEventListener("DOMContentLoaded", () => {
+        document.body.classList.add("fade-in");
+    });
+</script>
+</html>

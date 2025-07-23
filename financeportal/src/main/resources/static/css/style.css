@@ -1,0 +1,374 @@
+/* 🧼 Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+
+    /* ✨ NEW BACKGROUND IMAGE PROPERTIES ✨ */
+    background-image: url('../images/login-bg.webp');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #1f2330;
+
+
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Prevent scrollbars from background animation */
+    opacity: 0; /* Start hidden for fade-in */
+    transition: opacity 1s ease; /* Smooth fade-in */
+}
+
+body.fade-in {
+    opacity: 1;
+}
+
+/* You can keep or remove the @keyframes bgPulse if you no longer need the gradient animation */
+/*
+@keyframes bgPulse {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+*/
+
+/* 📦 Login Container */
+.auth-container {
+    width: 100%;
+    max-width: 420px; /* Slightly wider for better spacing */
+    padding: 20px;
+    display: flex; /* Use flex to center card */
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-card {
+    backdrop-filter: blur(18px); /* Increased blur for more depth */
+    background-color: rgba(28, 31, 47, 0.75); /* Slightly less transparent */
+    border: 1px solid rgba(255,255,255,0.1); /* Softer border */
+    padding: 40px 30px; /* More padding */
+    border-radius: 20px; /* More rounded */
+    box-shadow: 0 8px 30px rgba(0, 255, 170, 0.15), /* Stronger, more vibrant shadow */
+                0 0 0 1px rgba(0, 255, 170, 0.05); /* Subtle inner glow */
+    text-align: center;
+    animation: slideFadeIn 0.8s ease-out forwards; /* Smoother ease-out */
+    transform: translateY(30px);
+    opacity: 0;
+}
+
+@keyframes slideFadeIn {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* 🖊️ Heading */
+.app-title {
+    margin-bottom: 10px;
+    color: #00ffaa; /* Main accent color */
+    font-size: 32px; /* Larger title */
+    font-weight: 700; /* Bolder */
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px rgba(0, 255, 170, 0.4); /* Subtle glow effect */
+}
+
+.form-description {
+    font-size: 16px;
+    color: #cceeff;
+    margin-bottom: 30px;
+}
+
+/* 📥 Inputs */
+.input-group {
+    position: relative;
+    margin: 20px 0;
+}
+
+.auth-card input {
+    width: 100%;
+    padding: 14px 18px; /* More padding */
+    border: 1px solid #00ffaa;
+    border-radius: 12px; /* More rounded */
+    background-color: #131524;
+    color: #ffffff;
+    font-size: 16px; /* Slightly larger font */
+    outline: none;
+    transition: all 0.3s ease; /* Smooth transition for all properties */
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); /* Inner shadow for depth */
+}
+
+.auth-card input::placeholder {
+    color: #a0a0a0; /* Lighter placeholder text */
+}
+
+.auth-card input:focus {
+    border-color: #33ffc4;
+    background-color: #10121b;
+    box-shadow: 0 0 0 3px rgba(0, 255, 170, 0.3), inset 0 1px 3px rgba(0,0,0,0.5); /* Focus glow */
+}
+
+/* Password Toggle */
+.password-group input {
+    padding-right: 50px; /* Space for the toggle button */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #a0a0a0;
+    transition: color 0.3s ease;
+    padding: 5px; /* Make clickable area larger */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-password:hover {
+    color: #00ffaa;
+}
+
+/* 🆙 Button */
+.login-button {
+    width: 100%;
+    padding: 14px; /* More padding */
+    background: linear-gradient(45deg, #00ffaa, #33ffc4); /* Gradient button */
+    color: #000;
+    border: none;
+    border-radius: 12px; /* More rounded */
+    font-size: 18px; /* Larger font */
+    font-weight: 700; /* Bolder */
+    cursor: pointer;
+    margin-top: 25px; /* More space */
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 255, 170, 0.3); /* Button shadow */
+    letter-spacing: 0.5px;
+}
+
+.login-button:hover {
+    background: linear-gradient(45deg, #33ffc4, #00ffaa); /* Reverse gradient on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 7px 20px rgba(0, 255, 170, 0.4);
+}
+
+.login-button:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(0, 255, 170, 0.2);
+}
+
+/* 🔗 Links */
+.forgot-password {
+    margin-top: 15px;
+    font-size: 14px;
+    text-align: right; /* Align to right */
+}
+
+.forgot-password a, .signup-link a {
+    color: #00ffaa;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.forgot-password a:hover, .signup-link a:hover {
+    color: #33ffc4;
+    text-decoration: underline;
+}
+
+.signup-link {
+    margin-top: 25px; /* More space */
+    font-size: 15px;
+    color: #cceeff;
+}
+
+
+/* 📝 Messages */
+.message-box {
+    background-color: rgba(0, 255, 170, 0.1);
+    border: 1px solid #00ffaa;
+    color: #00ffaa;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.message-box.success {
+    background-color: rgba(0, 255, 0, 0.1);
+    border-color: #00ff00;
+    color: #00ff00;
+}
+
+.message-box.error {
+    background-color: rgba(255, 0, 0, 0.1);
+    border-color: #ff0000;
+    color: #ff0000;
+}
+
+
+/* 📱 Responsive */
+@media (max-width: 500px) {
+    .auth-card {
+        padding: 30px 20px;
+        border-radius: 15px;
+    }
+
+    .app-title {
+        font-size: 28px;
+    }
+
+    .form-description {
+        font-size: 15px;
+        margin-bottom: 25px;
+    }
+
+    .auth-card input {
+        padding: 12px 15px;
+        font-size: 15px;
+    }
+
+    .login-button {
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    .forgot-password, .signup-link {
+        font-size: 13px;
+    }
+}
+
+
+
+/* -------------------------------------------------------------------------- */
+/* REPORTS PAGE SPECIFIC CSS                                */
+/* -------------------------------------------------------------------------- */
+
+.report-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+    align-items: center;
+    background-color: rgba(28, 31, 47, 0.5);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 255, 170, 0.08);
+}
+
+.report-controls label {
+    font-weight: 500;
+    color: #cceeff;
+}
+
+.report-date-input {
+    padding: 10px 12px;
+    border: 1px solid #00ffaa;
+    border-radius: 8px;
+    background-color: #131524;
+    color: #fff;
+    outline: none;
+    flex-grow: 1;
+    min-width: 150px;
+}
+
+.report-date-input:focus {
+    border-color: #33ffc4;
+    box-shadow: 0 0 0 3px rgba(0, 255, 170, 0.3);
+}
+
+.report-button {
+    background: linear-gradient(45deg, #00ffaa, #33ffc4);
+    color: #000;
+    border: none;
+    padding: 10px 18px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0, 255, 170, 0.2);
+    flex-shrink: 0;
+}
+
+.report-button:hover {
+    background: linear-gradient(45deg, #33ffc4, #00ffaa);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(0, 255, 170, 0.3);
+}
+
+.chart-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.chart-container {
+    background-color: rgba(28, 31, 47, 0.75);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 255, 170, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chart-container h3 {
+    color: #00ffaa;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+/* Chart.js specific styling for dark theme */
+canvas {
+    max-width: 100%;
+    height: auto; /* Ensure height adjusts */
+}
+
+/* Ensure message box is visible on main app pages */
+body .message-box {
+    position: fixed; /* Use fixed position for global messages */
+    top: 20px;
+    right: 20px;
+    z-index: 10000; /* Ensure it's on top */
+    background-color: rgba(0, 255, 170, 0.1);
+    border: 1px solid #00ffaa;
+    color: #00ffaa;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 255, 170, 0.2);
+}
+
+/* Responsive adjustments for reports */
+@media (max-width: 768px) {
+    .report-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .report-date-input,
+    .report-button {
+        width: 100%;
+    }
+    .chart-section {
+        grid-template-columns: 1fr; /* Stack charts vertically on small screens */
+    }
+}

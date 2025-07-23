@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>UdayFinance - Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons for password toggle (using inline SVG for self-containment) -->
+</head>
+<body class="fade-in">
+<div class="auth-container">
+    <div class="auth-card">
+        <h2 class="app-title">UdayFinance</h2>
+        <p class="form-description">Login to your account</p>
+
+        <!-- Dynamic message display area -->
+        <div id="message-box" class="message-box" style="display: none;">
+            <p id="message-text"></p>
+        </div>
+
+        <!-- Thymeleaf messages (will be handled by JS for animation) -->
+        <div th:if="${param.logout}" class="server-message success" data-message="You’ve been logged out successfully."></div>
+        <div th:if="${message}" class="server-message error" th:attr="data-message=${message}"></div>
+
+        <form method="post" th:action="@{/login}">
+            <div class="input-group">
+                <input type="email" name="email" placeholder="Email" required autocomplete="username">
+            </div>
+            <div class="input-group password-group">
+                <input type="password" name="password" id="password-input" placeholder="Password" required autocomplete="current-password">
+                <button type="button" class="toggle-password" id="toggle-password">
+                    <!-- Eye icon SVG -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+            </div>
+            <button type="submit" class="login-button">Login</button>
+        </form>
+
+<!--        <p class="forgot-password">-->
+<!--            <a href="#">Forgot Password?</a>-->
+<!--        </p>-->
+        <p class="signup-link">
+            Not registered? <a href="/register"><strong>Sign up</strong></a>
+        </p>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Add fade-in class to body
+        document.body.classList.add("fade-in");
+
+        // Password Toggle functionality
+        const passwordInput = document.getElementById('password-input');
+        const togglePassword = document.getElementById('toggle-password');
+
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            // Change icon based on visibility
+            if (type === 'password') {
+                togglePassword.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                `;
+            } else {
+                togglePassword.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-off"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.749 9.749 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg>
+                `;
+            }
+        });
+
+        // Function to display messages dynamically
+        function showMessage(text, type = 'info') {
+            const messageBox = document.getElementById('message-box');
+            const messageText = document.getElementById('message-text');
+
+            messageText.textContent = text;
+            messageBox.className = `message-box ${type}`; // Add type class for styling
+            messageBox.style.display = 'block';
+            messageBox.style.opacity = '0'; // Start faded out
+            messageBox.style.transform = 'translateY(-20px)'; // Start slightly above
+
+            // Animate in
+            setTimeout(() => {
+                messageBox.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                messageBox.style.opacity = '1';
+                messageBox.style.transform = 'translateY(0)';
+            }, 10); // Small delay for transition to apply
+
+            // Animate out after 5 seconds
+            setTimeout(() => {
+                messageBox.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                messageBox.style.opacity = '0';
+                messageBox.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    messageBox.style.display = 'none';
+                    messageText.textContent = ''; // Clear text
+                }, 500); // Wait for fade out animation to complete
+            }, 5000);
+        }
+
+        // Handle server-side messages from Thymeleaf
+        const serverMessages = document.querySelectorAll('.server-message');
+        serverMessages.forEach(msgDiv => {
+            const message = msgDiv.getAttribute('data-message');
+            const type = msgDiv.classList.contains('success') ? 'success' : 'error';
+            if (message) {
+                showMessage(message, type);
+            }
+            msgDiv.remove(); // Remove the original hidden div after processing
+        });
+    });
+</script>
+</body>
+</html>

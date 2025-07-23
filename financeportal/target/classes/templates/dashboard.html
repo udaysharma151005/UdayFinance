@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- 🔗 Top Navbar -->
+<header class="nav-glow">
+    <div class="nav-logo">
+        <span>Uday<span class="highlight">Finance</span></span>
+    </div>
+    <div class="nav-menu">
+        <a th:href="@{/dashboard}" class="active-link">Dashboard</a>
+        <a th:href="@{/ledger}">Ledger</a>
+        <a th:href="@{/budget}">Budget</a>
+        <a th:href="@{/reports}">Report</a>
+        <form th:action="@{/logout}" method="post" style="margin: 0;">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </div>
+</header>
+<!-- 💰 Main Dashboard -->
+<div class="container">
+    <h2>Hello, <span th:text="${username}">User</span> 👋</h2>
+    <!-- 🚨 Budget Alert -->
+    <div th:if="${budgetExceeded}" class="alert-warning">
+        🚨 Monthly budget exceeded! Consider reviewing your expenses.
+    </div>
+    <div class="summary-cards">
+        <div class="card income">
+            <h3>Income</h3>
+            <div class="amount">₹<span th:text="${income}">0</span></div>
+        </div>
+        <div class="card expense">
+            <h3>Expense</h3>
+            <div class="amount">₹<span th:text="${expense}">0</span></div>
+        </div>
+        <div class="card balance">
+            <h3>Balance</h3>
+            <div class="amount">₹<span th:text="${balance}">0</span></div>
+        </div>
+    </div>
+    <!-- 🔍 Filters -->
+    <form class="filter-form" th:action="@{/dashboard}" method="get">
+        <select name="type">
+            <option th:selected="${type == 'ALL'}" value="ALL">All Types</option>
+            <option th:selected="${type == 'INCOME'}" value="INCOME">Income</option>
+            <option th:selected="${type == 'EXPENSE'}" value="EXPENSE">Expense</option>
+        </select>
+        <select name="mode">
+            <option th:selected="${mode == 'ALL'}" value="ALL">All Modes</option>
+            <option th:selected="${mode == 'ONLINE'}" value="ONLINE">Online</option>
+            <option th:selected="${mode == 'CASH'}" value="CASH">Cash</option>
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+    <!-- ➕ Add Transaction -->
+    <form class="transaction-form" th:action="@{/add-transaction}" method="post" th:object="${newTransaction}">
+        <select th:field="*{type}" required>
+            <option value="">Type</option>
+            <option value="INCOME">Income</option>
+            <option value="EXPENSE">Expense</option>
+        </select>
+        <select th:field="*{mode}" required>
+            <option value="">Mode</option>
+            <option value="ONLINE">Online</option>
+            <option value="CASH">Cash</option>
+        </select>
+        <input type="text" th:field="*{category}" placeholder="Category" required>
+        <input type="number" th:field="*{amount}" placeholder="Amount" required>
+        <input type="date" th:field="*{date}">
+        <input type="text" th:field="*{note}" placeholder="Note">
+        <button type="submit">➕ Add</button>
+    </form>
+    <!-- 📋 Transaction Table -->
+    <table>
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Mode</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Note</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="t : ${transactions}">
+            <td th:text="${t.date}">2025-07-08</td>
+            <td th:text="${t.type}">INCOME</td>
+            <td th:text="${t.mode}">ONLINE</td>
+            <td th:text="${t.category}">Salary</td>
+            <td>₹<span th:text="${t.amount}">0.00</span></td>
+            <td th:text="${t.note}">Monthly pay</td>
+            <td>
+                <a th:href="@{'/delete-transaction/' + ${t.id}}"
+                   onclick="return confirm('Delete this entry?')" style="color: red;">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!-- 🔻 Footer -->
+<div th:replace="fragments/footer :: body"></div>
+</body>
+</html>

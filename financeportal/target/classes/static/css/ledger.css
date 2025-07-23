@@ -1,0 +1,322 @@
+/* 🌐 Container */
+.container {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 25px;
+    font-family: 'Segoe UI', sans-serif;
+    color: #1a1a1a;
+}
+
+/* 💼 Summary Cards */
+.summary-cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 35px;
+}
+
+.card {
+    flex: 1;
+    min-width: 220px;
+    background: #f4f6f8;
+    border-left: 6px solid #1976d2;
+    border-radius: 10px;
+    padding: 20px 24px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    transition: 0.2s ease;
+}
+
+.card h3 {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.amount {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #1e3a5f;
+}
+
+/* 🧾 Filter + Add Forms */
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+    align-items: center;
+}
+
+form input,
+form select {
+    padding: 10px 12px;
+    font-size: 0.95em;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fdfdfd;
+    min-width: 160px;
+}
+
+form button {
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+form button:hover {
+    background-color: #0d47a1;
+}
+
+/* 📊 Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+table th {
+    background: #1e3a5f;
+    color: white;
+    padding: 14px;
+    text-align: left;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 0.5px;
+}
+
+table td {
+    padding: 13px;
+    font-size: 0.95em;
+    color: #222;
+    border-top: 1px solid #eee;
+}
+
+table tr:hover td {
+    background: #f1f8ff;
+}
+
+/* 📈 Chart */
+canvas {
+    max-width: 400px;
+    margin: 30px auto;
+    display: block;
+}
+
+/* 🌗 Dark Mode */
+body.dark {
+    background-color: #0e1118;
+    color: #ccc;
+}
+
+body.dark .card {
+    background: #1a1f2d;
+    border-left: 6px solid #00acc1;
+}
+
+body.dark .amount {
+    color: #e3f2fd;
+}
+
+body.dark table {
+    background: #1a1f2d;
+    color: #eee;
+}
+
+body.dark table th {
+    background: #263238;
+}
+
+body.dark input,
+body.dark select,
+body.dark button {
+    background: #1f252e;
+    color: #eee;
+    border: 1px solid #333;
+}
+
+body.dark form button {
+    background-color: #00acc1;
+}
+
+body.dark form button:hover {
+    background-color: #26c6da;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+    .summary-cards {
+        flex-direction: column;
+    }
+    form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    form input,
+    form select,
+    form button {
+        width: 100%;
+    }
+}
+
+
+
+.nav-glow {
+    position: sticky;
+    top: 0;
+    background-color: #1e3a5f;
+    color: white;
+    padding: 14px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.nav-logo {
+    font-size: 1.5em;
+    font-weight: 700;
+    font-family: 'Segoe UI', sans-serif;
+    letter-spacing: 1px;
+}
+
+.nav-logo .highlight {
+    color: #ffca28;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+}
+
+.nav-menu a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    padding-bottom: 4px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #ffca28;
+    transition: width 0.3s ease;
+    border-radius: 2px;
+}
+
+.nav-menu a:hover::after {
+    width: 100%;
+}
+
+.nav-menu a:hover {
+    color: #ffca28;
+}
+
+.logout-button {
+    background-color: #ffca28;
+    color: #1e3a5f;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #ffd54f;
+}
+
+
+
+
+/* 📌 Active Nav Link Highlight */
+.active-link {
+    color: #ffca28;
+    font-weight: 600;
+}
+.active-link::after {
+    width: 100%;
+}
+
+/* 💼 Budget Section */
+.container h2 {
+    margin-top: 40px;
+    font-weight: 600;
+    color: #1e3a5f;
+}
+
+.container form input[type="number"] {
+    width: 240px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+    font-size: 1em;
+}
+
+.container form button {
+    padding: 12px 20px;
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.container form button:hover {
+    background-color: #0d47a1;
+}
+
+/* 📊 Progress bar styling */
+progress {
+    height: 14px;
+    border-radius: 10px;
+    overflow: hidden;
+    appearance: none;
+}
+
+progress::-webkit-progress-bar {
+    background-color: #e0e0e0;
+}
+
+progress::-webkit-progress-value {
+    background-color: #4caf50;
+}
+
+body.dark progress::-webkit-progress-bar {
+    background-color: #333;
+}
+
+body.dark progress::-webkit-progress-value {
+    background-color: #00acc1;
+}
+
+
+.progress-red::-webkit-progress-value {
+    background-color: #f44336;
+}
+
+.progress-green::-webkit-progress-value {
+    background-color: #4caf50;
+}

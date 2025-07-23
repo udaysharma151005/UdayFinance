@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Set Budget</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- 🔗 Embedded Navbar (like dashboard) -->
+<header class="nav-glow">
+    <div class="nav-logo">
+        <span>Uday<span class="highlight">Finance</span></span>
+    </div>
+    <div class="nav-menu">
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/ledger}">Ledger</a>
+        <a th:href="@{/budget}" class="active-link">Budget</a>
+        <form th:action="@{/logout}" method="post" style="margin: 0;">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </div>
+</header>
+<!-- 💼 Budget Section -->
+<div class="container">
+    <h2>📅 Monthly Budget</h2>
+    <!-- Budget Form -->
+    <form th:action="@{/set-budget}" method="post" style="margin-top: 20px;">
+        <input type="number" name="monthlyBudget" step="0.01" th:value="${monthlyBudget}"
+               placeholder="Enter Monthly Budget" required>
+        <button type="submit">💰 Save Budget</button>
+    </form>
+    <!-- Display Budget Info -->
+    <div th:if="${monthlyBudget != null}" style="margin-top: 20px;">
+        <p><strong>Budget Set:</strong> ₹<span th:text="${monthlyBudget}">0.00</span></p>
+        <p><strong>Expense This Month:</strong> ₹<span th:text="${totalExpenseThisMonth}">0.00</span></p>
+        <p>
+            <strong>Remaining:</strong> ₹
+            <span th:text="${monthlyBudget - totalExpenseThisMonth}">0.00</span>
+            <span th:if="${remainingBudget < 0}" style="color: red;">(Over Budget!)</span>
+            <span th:if="${remainingBudget >= 0}" style="color: lightgreen;">(Under Budget ✅)</span>
+        </p>
+        <!-- Budget Progress Bar -->
+        <progress th:class="${remainingBudget < 0} ? 'progress-red' : 'progress-green'"
+                  th:value="${totalExpenseThisMonth}" th:max="${monthlyBudget}"
+                  style="width: 100%; height: 18px; margin-top: 10px; border-radius: 10px;"></progress>
+    </div>
+</div>
+<!-- 🔻 Optional Footer -->
+<div th:replace="fragments/footer :: body"></div>
+
+</body>
+</html>

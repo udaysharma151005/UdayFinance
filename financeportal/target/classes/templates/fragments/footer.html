@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/nav.css}">
+<body>
+<footer style="background-color: #f5f5f5; padding: 20px 30px; text-align: center; color: #555; font-size: 0.9em; border-top: 1px solid #ddd; margin-top: 60px;">
+    <div>&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span> <strong>Uday's Expense Portal</strong> — Designed with ❤️ in India</div>
+    <div style="margin-top: 5px;">
+        <a href="#" style="color: #666; margin: 0 10px; text-decoration: none;">Privacy</a>|
+        <a href="#" style="color: #666; margin: 0 10px; text-decoration: none;">Terms</a>|
+        <a href="#" style="color: #666; margin: 0 10px; text-decoration: none;">Contact</a>
+    </div>
+</footer>
+</body>
+</html>

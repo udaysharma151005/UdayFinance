@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        .register-green h2 {
+            color: #00ffaa;
+        }
+        .register-green input {
+            border: 1px solid #00ffaa;
+            background-color: #131524;
+            color: #fff;
+        }
+        .register-green button {
+            background-color: #00ffaa;
+            color: #000;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        .register-green p {
+            margin-top: 10px;
+            text-align: center;
+        }
+        .register-green a {
+            color: #00ffaa;
+        }
+    </style>
+</head>
+<body>
+<div class="auth-container register-green">
+    <div class="auth-card">
+        <h2>Sign Up</h2>
+        <form method="post" th:action="@{/register}" th:object="${user}">
+            <input type="text" th:field="*{name}" placeholder="Your Name" required>
+            <input type="email" th:field="*{email}" placeholder="Email Address" required>
+            <input type="password" th:field="*{password}" placeholder="Create Password" required>
+            <button type="submit">Create Account</button>
+        </form>
+        <p>
+            <a href="/login">Already have an account? <strong>Login</strong></a>
+        </p>
+    </div>
+</div>
+</body>
+<script>
+    window.addEventListener("DOMContentLoaded", () => {
+        document.body.classList.add("fade-in");
+    });
+</script>
+</html>

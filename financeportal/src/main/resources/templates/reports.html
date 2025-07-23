@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reports</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/reports.css}">
+    <link rel="stylesheet" th:href="@{/css/nav.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- 🔗 Top Navbar -->
+<header class="nav-glow">
+    <div class="nav-logo">
+        <span>Uday<span class="highlight">Finance</span></span>
+    </div>
+    <div class="nav-menu">
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/ledger}">Ledger</a>
+        <a th:href="@{/budget}">Budget</a>
+        <a th:href="@{/reports}" class="active-link">Reports</a>
+        <form th:action="@{/logout}" method="post" style="margin: 0;">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </div>
+</header>
+
+<!-- 📊 Reports Content -->
+<div class="container">
+
+    <h2>Hello, <span th:text="${username}">User</span> 👋 — Monthly Financial Overview</h2>
+
+    <!-- 💸 Summary Cards -->
+    <div class="card-section">
+        <div class="card-box">
+            <h3>Income</h3>
+            <div class="value">₹<span th:text="${income}">0</span></div>
+        </div>
+        <div class="card-box">
+            <h3>Expense</h3>
+            <div class="value">₹<span th:text="${expense}">0</span></div>
+        </div>
+        <div class="card-box">
+            <h3>Balance</h3>
+            <div class="value">₹<span th:text="${balance}">0</span></div>
+        </div>
+    </div>
+
+    <!-- 📈 Charts Section -->
+    <div class="chart-wrapper" style="max-width: 500px; margin: 0 auto;">
+        <canvas id="modeChart" style="height: 300px;"></canvas>
+    </div>
+
+    <div class="chart-section" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; margin-bottom: 50px;">
+        <div class="chart-wrapper" style="flex: 1; max-width: 450px;">
+            <canvas id="expenseChart" style="height: 300px;"></canvas>
+        </div>
+        <div class="chart-wrapper" style="flex: 1; max-width: 450px;">
+            <canvas id="incomeChart" style="height: 300px;"></canvas>
+        </div>
+    </div>
+
+
+    <!-- 🗂 Expense Category Table -->
+    <div class="table-section">
+        <h3>Expense Category Breakdown</h3>
+        <table class="category-table">
+            <thead>
+            <tr>
+                <th>Category</th>
+                <th>Total (₹)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="entry : ${expenseCategoryBreakdown}">
+                <td th:text="${entry.key}">Food</td>
+                <td th:text="${entry.value}">500</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- 🔻 Footer -->
+<div th:replace="fragments/footer :: body"></div>
+
+<!-- 📊 Chart.js Script -->
+<script th:inline="javascript">
+    const modeData = [[${modeBreakdown}]];
+    const incomeData = [[${incomeCategoryBreakdown}]];
+    const expenseData = [[${expenseCategoryBreakdown}]];
+
+    new Chart(document.getElementById('modeChart'), {
+        type: 'pie',
+        data: {
+            labels: Object.keys(modeData),
+            datasets: [{
+                data: Object.values(modeData),
+                backgroundColor: ['#36A2EB', '#FF6384'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Spending Mode Split'
+                }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('expenseChart'), {
+        type: 'pie',
+        data: {
+            labels: Object.keys(expenseData),
+            datasets: [{
+                data: Object.values(expenseData),
+                backgroundColor: ['#FF6F61', '#FFC107', '#D500F9', '#4A148C'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Expense by Category'
+                }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('incomeChart'), {
+        type: 'pie',
+        data: {
+            labels: Object.keys(incomeData),
+            datasets: [{
+                data: Object.values(incomeData),
+                backgroundColor: ['#4CAF50', '#8BC34A', '#009688'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Income by Category'
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

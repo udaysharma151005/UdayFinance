@@ -1,0 +1,21 @@
+<!-- fragments/navbar.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<header class="nav-glow">
+    <div class="nav-logo">
+        <span>Uday<span class="highlight">Finance</span></span>
+    </div>
+    <div class="nav-right">
+        <nav class="nav-menu">
+            <a th:href="@{/dashboard}" th:classappend="${#httpServletRequest.requestURI == '/dashboard'} ? 'active-link' : ''">Dashboard</a>
+            <a th:href="@{/ledger}" th:classappend="${#httpServletRequest.requestURI == '/ledger'} ? 'active-link' : ''">Ledger</a>
+            <a th:href="@{/budget}" th:classappend="${#httpServletRequest.requestURI == '/budget'} ? 'active-link' : ''">Budget</a>
+        </nav>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </div>
+</header>
+</body>
+</html>
